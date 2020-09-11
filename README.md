@@ -1,4 +1,6 @@
-# vulidate5
+# Validation form with vulidate (vue.js)
+
+link: https://stasokulov.github.io/form-vulidate/
 
 ## Project setup
 ```
