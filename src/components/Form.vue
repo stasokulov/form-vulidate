@@ -359,6 +359,7 @@ export default {
       flex-direction: column
       width: 50%
       min-width: 300px
+      max-width: 400px
       margin: auto
 
       button[type='submit']
@@ -387,4 +388,6 @@ export default {
 
         .okButton
           margin-top: 20px
+          width: 100px
+          height: 25px
 </style>
