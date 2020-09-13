@@ -1,86 +1,111 @@
 <template>
-  <form class="form">
-    <Input :form-data="secondName"
-           :submitted="submitted"
-           v-on:input="setValidations($event, 'secondName')"
-    />
-    <Input :form-data="firstName"
-           :submitted="submitted"
-           v-on:input="setValidations($event, 'firstName')"
-    />
-    <Input :form-data="lastName"
-           v-on:input="setValidations($event, 'lastName')"
-    />
-    <Input :form-data="birthday"
-           :submitted="submitted"
-           v-on:input="setValidations($event, 'birthday')"
-    />
-    <Input :form-data="telNumber"
-           :submitted="submitted"
-           v-on:input="setValidations($event, 'telNumber')"
-    />
-    <Select :form-data="gender"
-            v-on:input="setValidations($event, 'gender')"
-    />
-    <Select :form-data="clientGroup"
-            :submitted="submitted"
-            v-on:input="setValidations($event, 'clientGroup')"
-    />
-    <Select :form-data="doctor"
-            v-on:input="setValidations($event, 'doctor')"
-    />
-    <Checkbox :form-data="noSendSms"
-              v-on:input="setValidations($event, 'noSendSms')"
-    />
-    <Input :form-data="address.postcode"
-           v-on:input="setValidations($event, 'address.postcode')"
-    />
-    <Input :form-data="address.country"
-           v-on:input="setValidations($event, 'address.country')"
-    />
-    <Input :form-data="address.region"
-           v-on:input="setValidations($event, 'address.region')"
-    />
-    <Input :form-data="address.city"
-           :submitted="submitted"
-           v-on:input="setValidations($event, 'address.city')"
-    />
-    <Input :form-data="address.street"
-
-           v-on:input="setValidations($event, 'address.street')"
-    />
-    <Input :form-data="address.house"
-           v-on:input="setValidations($event, 'address.house')"
-    />
-    <Select :form-data="passport.type"
-            v-on:input="setValidations($event, 'passport.type')"
-    />
-    <Input :form-data="passport.series"
-           v-on:input="setValidations($event, 'passport.series')"
-    />
-    <Input :form-data="passport.number"
-           v-on:input="setValidations($event, 'passport.number')"
-    />
-    <Input :form-data="passport.whoIssued"
-           v-on:input="setValidations($event, 'passport.whoIssued')"
-    />
-    <Input :form-data="passport.issueDate"
-           :submitted="submitted"
-           v-on:input="setValidations($event, 'passport.issueDate')"
-    />
-
-    <button type="submit" @click.prevent="checkRequireds">Отправить</button>
-  </form>
+  <div class="form-wrap">
+    <form class="form">
+      <Input :form-data="secondName"
+             :validations="$v.secondName.value"
+             v-on:input="secondName.value = $event"
+      />
+      <Input :form-data="firstName"
+             :validations="$v.firstName.value"
+             v-on:input="firstName.value = $event"
+      />
+      <Input :form-data="lastName"
+             :validations="$v.lastName.value"
+             v-on:input="lastName.value = $event"
+      />
+      <Input :form-data="birthday"
+             :validations="$v.birthday.value"
+             v-on:input="birthday.value = $event"
+      />
+      <Input :form-data="telNumber"
+             :validations="$v.telNumber.value"
+             v-on:input="telNumber.value = $event"
+      />
+      <Select :form-data="gender"
+              :validations="$v.gender.value"
+              v-on:input="gender.value = $event"
+      />
+      <Select :form-data="clientGroup"
+              :validations="$v.clientGroup.value"
+              v-on:input="clientGroup.value = $event"
+      />
+      <Select :form-data="doctor"
+              :validations="$v.doctor.value"
+              v-on:input="doctor.value = $event"
+      />
+      <Checkbox :form-data="noSendSms"
+                :validations="$v.noSendSms.value"
+                v-on:input="noSendSms.value = $event"
+      />
+      <Input :form-data="address.postcode"
+             :validations="$v.address.postcode.value"
+             v-on:input="address.postcode.value = $event"
+      />
+      <Input :form-data="address.country"
+             :validations="$v.address.country.value"
+             v-on:input="address.country.value = $event"
+      />
+      <Input :form-data="address.region"
+             :validations="$v.address.region.value"
+             v-on:input="address.region.value = $event"
+      />
+      <Input :form-data="address.city"
+             :validations="$v.address.city.value"
+             v-on:input="address.city.value = $event"
+      />
+      <Input :form-data="address.street"
+             :validations="$v.address.street.value"
+             v-on:input="address.street.value = $event"
+      />
+      <Input :form-data="address.house"
+             :validations="$v.address.house.value"
+             v-on:input="address.house.value = $event"
+      />
+      <Select :form-data="passport.type"
+              :validations="$v.passport.type.value"
+              v-on:input="passport.type.value = $event"
+      />
+      <Input :form-data="passport.series"
+             :validations="$v.passport.series.value"
+             v-on:input="passport.series.value = $event"
+      />
+      <Input :form-data="passport.number"
+             :validations="$v.passport.number.value"
+             v-on:input="passport.number.value = $event"
+      />
+      <Input :form-data="passport.whoIssued"
+             :validations="$v.passport.whoIssued.value"
+             v-on:input="passport.whoIssued.value = $event"
+      />
+      <Input :form-data="passport.issueDate"
+             :validations="$v.passport.issueDate.value"
+             v-on:input="passport.issueDate.value = $event"
+      />
+      <button type="submit" @click.prevent="checkForm">Отправить</button>
+    </form>
+    <div class="modal" v-if="showModal">
+      <div class="message">
+        Вы заполнили форму без ошибок
+        <button class="okButton" @click="showModal = false">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import Input from './Input'
-import Select from './Select'
-import Checkbox from './Checkbox'
+import Input from './molecules/Input'
+import Select from './molecules/Select'
+import Checkbox from './molecules/Checkbox'
 import { validationMixin } from 'vuelidate'
 import { required, minLength, numeric, maxLength } from 'vuelidate/lib/validators'
 const checkLatinCyrillic = function (value) {
-  return (/^[a-zа-яA-ZА-Я ]+$/i).test(value)
+  if (value) {
+    return (/^[a-zа-яA-ZА-Я ]+$/i).test(value)
+  } else {
+    return true
+  }
 }
 export default {
   name: 'Form',
@@ -92,82 +117,67 @@ export default {
   },
   data () {
     return {
-      submitted: false,
+      showModal: false,
       firstName: {
         label: 'Имя',
         value: '',
         type: 'text',
         required: true,
-        placeholder: 'Введите имя',
-        validations: {}
+        placeholder: 'Введите имя'
       },
       secondName: {
         label: 'Фамилия',
         value: '',
         type: 'text',
         required: true,
-        placeholder: 'Введите фамилию',
-        validations: {}
+        placeholder: 'Введите фамилию'
       },
       lastName: {
         label: 'Отчество',
         value: '',
         type: 'text',
         required: false,
-        placeholder: 'Введите отчество',
-        validations: {}
+        placeholder: 'Введите отчество'
       },
       birthday: {
         label: 'Дата рождения',
         value: '',
         type: 'date',
         required: true,
-        placeholder: '',
-        validations: {}
+        placeholder: ''
       },
       telNumber: {
         label: 'Номер телефона',
         value: '',
         type: 'tel',
         required: true,
-        placeholder: '',
-        validations: {}
+        placeholder: ''
       },
       gender: {
         label: 'Пол',
         value: '',
-        type: '',
         required: false,
-        placeholder: '',
-        options: ['Мужской', 'Женский'],
-        validations: {}
+        options: ['Мужской', 'Женский']
       },
       clientGroup: {
         label: 'Группа клиентов',
         value: '',
-        type: '',
         required: true,
-        placeholder: '',
         options: ['VIP', 'Проблемные', 'ОМС'],
-        multipleSelect: true,
-        validations: {}
+        multipleSelect: true
       },
       doctor: {
         label: 'Лечащий врач',
         value: '',
-        type: '',
         required: false,
-        placeholder: '',
-        options: ['Иванов', 'Захаров', 'Чернышева'],
-        validations: {}
+        options: ['Иванов', 'Захаров', 'Чернышева']
       },
       noSendSms: {
         label: 'Не отправлять SMS',
         value: '',
         type: 'checkbox',
         required: false,
-        placeholder: '',
-        validations: {}
+        placeholder: ''
       },
       address: {
         postcode: {
@@ -175,110 +185,88 @@ export default {
           value: '',
           type: 'number',
           required: false,
-          placeholder: '',
-          validations: {}
+          placeholder: ''
         },
         country: {
           label: 'Страна',
           value: '',
           type: 'text',
           required: false,
-          placeholder: '',
-          validations: {}
+          placeholder: ''
         },
         region: {
           label: 'Область',
           value: '',
           type: 'text',
           required: false,
-          placeholder: '',
-          validations: {}
+          placeholder: ''
         },
         city: {
           label: 'Город',
           value: '',
           type: 'text',
           required: true,
-          placeholder: '',
-          validations: {}
+          placeholder: ''
         },
         street: {
           label: 'Улица',
           value: '',
           type: 'text',
           required: false,
-          placeholder: '',
-          validations: {}
+          placeholder: ''
         },
         house: {
           label: 'Дом',
           value: '',
           type: 'number',
           required: false,
-          placeholder: '',
-          validations: {}
+          placeholder: ''
         }
       },
       passport: {
         type: {
           label: 'Тип документа:',
           value: '',
-          type: '',
           required: true,
-          placeholder: '',
-          options: ['Паспорт', 'Свидетельство о рождении', 'Водительское удостоверение'],
-          validations: {}
+          options: ['Паспорт', 'Свидетельство о рождении', 'Водительское удостоверение']
         },
         series: {
           label: 'Серия',
           value: '',
           type: 'text',
           required: false,
-          placeholder: '',
-          validations: {}
+          placeholder: ''
         },
         number: {
           label: 'Номер',
           value: '',
           type: 'number',
           required: false,
-          placeholder: '',
-          validations: {}
+          placeholder: ''
         },
         whoIssued: {
           label: 'Кем выдан',
           value: '',
           type: 'text',
           required: false,
-          placeholder: '',
-          validations: {}
+          placeholder: ''
         },
         issueDate: {
           label: 'Дата выдачи',
           value: '',
           type: 'date',
           required: true,
-          placeholder: '',
-          validations: {}
+          placeholder: ''
         }
       }
     }
   },
   methods: {
-    setValidations: function (value, fieldName) {
-      const path = fieldName.split('.')
-      if (path.length === 1) {
-        this[fieldName].value = value // Записываем значение из компонента
-        this[fieldName].validations = this.$v[fieldName].value // Записываем результат валидации
-      }
-      if (path.length === 2) {
-        this[path[0]][path[1]].value = value // Записываем значение из компонента
-        this[path[0]][path[1]].validations = this.$v[path[0]][path[1]].value // Записываем результат валидации
-      }
-    },
-    checkRequireds: function () {
+    checkForm: function () {
       this.$v.$touch()
-      this.submitted = true
+      if (!this.$v.$invalid) {
+        this.showModal = true
+      }
     }
   },
   validations: {
@@ -363,11 +351,40 @@ export default {
 </script>
 
 <style lang="sass">
-  .form
-    display: flex
-    flex-direction: column
-    width: 50%
-    min-width: 300px
-    margin: auto
+  .form-wrap
     font-family: sans-serif
+
+    .form
+      display: flex
+      flex-direction: column
+      width: 50%
+      min-width: 300px
+      margin: auto
+
+      button[type='submit']
+        width: 100px
+        height: 30px
+        margin: 15px auto 0 auto
+
+    .modal
+      position: fixed
+      display: flex
+      align-items: center
+      top: 0
+      width: 100vw
+      height: 100vh
+      background-color: rgba(0, 0, 0, .5)
+
+      .message
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+        margin: auto
+        width: 300px
+        height: 100px
+        background-color: #fff
+
+        .okButton
+          margin-top: 20px
 </style>
